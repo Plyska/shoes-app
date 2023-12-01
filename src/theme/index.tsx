@@ -3,21 +3,72 @@ import { createTheme } from "@mui/material/styles";
 import { palette } from "./palette";
 import MuiButton from "./components/MuiButton";
 import MuiTextField from "./components/MuiTextField";
-import { themeColors } from "./palette";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: themeColors.black,
+      main: palette.themeColors.black,
     },
     error: {
-      main: themeColors.red
-    }
+      main: palette.themeColors.red,
+    },
   },
   components: {
     MuiButton,
-    MuiTextField
+    MuiTextField,
   },
 });
+
+theme.typography.h1 = {
+  fontFamily: "Boxing",
+  fontWeight: 400,
+  [theme.breakpoints.up("xs")]: {
+    fontSize: "2rem",
+    lineHeight: "2rem",
+    textAlign: "center",
+  },
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "2rem",
+    lineHeight: "2rem",
+    textAlign: "center",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2.5rem",
+    lineHeight: "2rem",
+    textAlign: "center",
+  },
+  [theme.breakpoints.up("xl")]: {
+    fontSize: "4rem",
+    lineHeight: "4rem",
+    textAlign: "left",
+  },
+  [theme.breakpoints.up("lg")]: {
+    fontSize: "4rem",
+    lineHeight: "4rem",
+    textAlign: "left",
+  },
+};
+
+theme.typography.body1 = {
+  fontFamily: "Excon-Regular",
+  fontWeight: 400,
+  fontSize: "1rem",
+  lineHeight: "1.5rem",
+  [theme.breakpoints.up("xs")]: {
+    textAlign: "center",
+  },
+  [theme.breakpoints.up("sm")]: {
+    textAlign: "center",
+  },
+  [theme.breakpoints.up("md")]: {
+    textAlign: "center",
+  },
+  [theme.breakpoints.up("xl")]: {
+    textAlign: "left",
+  },
+  [theme.breakpoints.up("lg")]: {
+    textAlign: "left",
+  },
+};
 
 export default theme;
