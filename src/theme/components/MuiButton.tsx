@@ -22,7 +22,6 @@ const MuiButton: Partial<Components["MuiButton"]> = {
         // backgroundColor: palette.themeColors.button,
         // color: `${palette.themeColors.black} !important`,
         // border: `1px solid ${palette.themeColors.button}`,
-
         // "& svg": {
         //   fill: palette.themeColors.button,
         //   stroke: palette.themeColors.button,
@@ -32,7 +31,6 @@ const MuiButton: Partial<Components["MuiButton"]> = {
         // backgroundColor: palette.themeColors.buttonText,
         // color: `${palette.themeColors.button} !important`,
         // border: `2px solid ${palette.themeColors.button}`,
-
         // "& svg": {
         //   fill: palette.themeColors.button,
         //   stroke: palette.themeColors.button,
