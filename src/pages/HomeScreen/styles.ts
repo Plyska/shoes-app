@@ -1,11 +1,4 @@
 export const styles = {
-  title: {
-    xs: "h2",
-    sm: "h2",
-    md: "h1",
-    xl: "h1",
-    lg: "h1",
-  },
   container: {
     px: {
       xs: "1.375rem",

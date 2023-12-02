@@ -45,13 +45,19 @@ const MuiButton: Partial<Components["MuiButton"]> = {
         backgroundColor: palette.themeColors.light_gray,
 
         "& svg": {
-          fill: palette.themeColors.light_gray,
-          stroke: palette.themeColors.gray,
+          fill: palette.themeColors.white,
+          stroke: palette.themeColors.white,
         },
       },
     },
   },
   variants: [
+    {
+      props: { size: "large" },
+      style: {
+        padding: "0.65rem 2rem",
+      },
+    },
     {
       props: { variant: "outlined" },
       style: {
