@@ -71,4 +71,12 @@ theme.typography.body1 = {
   },
 };
 
+theme.typography.body2 = {
+  fontFamily: "Excon-Regular",
+  fontWeight: 400,
+  fontSize: "1rem",
+  lineHeight: "1.5rem",
+  textAlign: "center",
+};
+
 export default theme;
