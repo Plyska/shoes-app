@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -9,11 +10,22 @@ import Stack from "@mui/material/Stack";
 import { styles } from "./styles";
 import SearchHeader from "./SearchHeader";
 import CreateImage from "../../assets/create.png";
+import MuiDrawer from "./Drawer";
 
 const CreateShoesScreen = (): JSX.Element => {
+  const [isDrawer, setIsDrawer] = useState<boolean>(false);
+
+  const openDrawer = () => {
+    setIsDrawer(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawer(false);
+  };
+
   return (
     <Box component="main" sx={styles.container}>
-      <SearchHeader />
+      <SearchHeader openDrawer={openDrawer} />
       <Stack
         display="flex"
         alignItems="center"
@@ -34,10 +46,16 @@ const CreateShoesScreen = (): JSX.Element => {
         </Stack>
       </Stack>
       <Stack mt="5rem" sx={styles.mobileButton}>
-        <Button startIcon={<PlusIcon />} size="large" variant="contained">
+        <Button
+          startIcon={<PlusIcon />}
+          size="large"
+          variant="contained"
+          onClick={openDrawer}
+        >
           Add new sneakers
         </Button>
       </Stack>
+      <MuiDrawer isDrawer={isDrawer} closeDrawer={closeDrawer} />
     </Box>
   );
 };
