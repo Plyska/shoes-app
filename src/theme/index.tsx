@@ -49,6 +49,12 @@ theme.typography.h1 = {
   },
 };
 
+theme.typography.h2 = {
+  fontFamily: "Boxing",
+  fontWeight: 400,
+  fontSize: "2.25rem"
+};
+
 theme.typography.body1 = {
   fontFamily: "Excon-Regular",
   fontWeight: 400,
@@ -78,5 +84,13 @@ theme.typography.body2 = {
   lineHeight: "1.5rem",
   textAlign: "center",
 };
+
+// theme.typography. = {
+//   fontFamily: "Excon-Regular",
+//   fontWeight: 400,
+//   fontSize: "1rem",
+//   lineHeight: "1.5rem",
+//   textAlign: "center",
+// };
 
 export default theme;

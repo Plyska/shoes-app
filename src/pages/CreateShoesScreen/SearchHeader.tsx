@@ -9,7 +9,11 @@ import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 import { styles } from "./styles";
 
-const SearchHeader = (): JSX.Element => {
+interface SearchHeaderProps {
+  openDrawer: () => void;
+}
+
+const SearchHeader = ({ openDrawer }: SearchHeaderProps): JSX.Element => {
   return (
     <Box component="section" sx={styles.header}>
       <Box>
@@ -31,7 +35,12 @@ const SearchHeader = (): JSX.Element => {
           />
         </Box>
         <Box sx={styles.buttonContainer}>
-          <Button startIcon={<PlusIcon />} size="large" variant="contained">
+          <Button
+            startIcon={<PlusIcon />}
+            size="large"
+            variant="contained"
+            onClick={openDrawer}
+          >
             Add new sneakers
           </Button>
         </Box>
