@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -15,6 +15,11 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { DrawerForm } from "../../types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { drawerFormValidator } from "../../validations/DrawerFormValidator";
+import { addNewShoes } from "../../api/addNewShoes";
+import { getAllShoes } from "../../api/getAllShoes";
+import { Shoes } from "../../types";
+import { useAllShoes } from "../../hooks/useAllShoes";
+import { useAddShoes } from "../../hooks/useAddShoes";
 
 interface MuiDrawerProps {
   isDrawer: boolean;
@@ -22,10 +27,14 @@ interface MuiDrawerProps {
 }
 
 const MuiDrawer = ({ isDrawer, closeDrawer }: MuiDrawerProps): JSX.Element => {
+  const { data, loading, error, fetchData } = useAllShoes();
+  const { addShoes } = useAddShoes(fetchData);
+  console.log(data);
   const {
     register,
     handleSubmit,
     control,
+    reset,
     watch,
     formState: { errors },
   } = useForm<DrawerForm>({
@@ -33,8 +42,10 @@ const MuiDrawer = ({ isDrawer, closeDrawer }: MuiDrawerProps): JSX.Element => {
   });
 
   const onSubmit: SubmitHandler<DrawerForm> = async (shoes) => {
-    console.log(shoes);
-  }
+    await addShoes(shoes);
+    reset();
+    closeDrawer();
+  };
 
   return (
     <Drawer
