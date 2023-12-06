@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -6,35 +5,40 @@ import Box from "@mui/material/Box";
 import { styles } from "./styles";
 import { ReactComponent as CloseSvg } from "../../assets/icons/close.svg";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { DrawerForm } from "../../types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { drawerFormValidator } from "../../validations/DrawerFormValidator";
+import { DrawerForm } from "../../types";
 
 interface MuiDrawerProps {
   isDrawer: boolean;
   closeDrawer: () => void;
+  addShoes: (shoes: DrawerForm) => void;
 }
 
-const MuiDrawer = ({ isDrawer, closeDrawer }: MuiDrawerProps): JSX.Element => {
+const MuiDrawer = ({
+  isDrawer,
+  closeDrawer,
+  addShoes,
+}: MuiDrawerProps): JSX.Element => {
   const {
     register,
     handleSubmit,
     control,
-    watch,
+    reset,
     formState: { errors },
   } = useForm<DrawerForm>({
     resolver: yupResolver(drawerFormValidator),
   });
 
   const onSubmit: SubmitHandler<DrawerForm> = async (shoes) => {
-    console.log(shoes);
-  }
+    reset();
+    closeDrawer();
+    addShoes(shoes);
+  };
 
   return (
     <Drawer
@@ -117,7 +121,11 @@ const MuiDrawer = ({ isDrawer, closeDrawer }: MuiDrawerProps): JSX.Element => {
                 }}
                 name="rating"
                 render={({ field: props }) => (
-                  <Rating {...props} name="simple-controlled" />
+                  <Rating
+                    {...props}
+                    value={Number(props.value)}
+                    name="simple-controlled"
+                  />
                 )}
               />
             </Box>
