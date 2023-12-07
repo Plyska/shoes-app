@@ -12,6 +12,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Excon-Bold';
+  src: url('../public/fonts/Excon-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background-color: #E0E0E0;
   margin: 0;
