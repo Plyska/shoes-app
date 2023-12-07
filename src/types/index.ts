@@ -10,3 +10,5 @@ export interface DrawerForm {
 export interface Shoes extends DrawerForm {
   _id: string;
 }
+
+export type FilterState = "year" | "size" | "price";

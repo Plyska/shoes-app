@@ -1,3 +1,5 @@
+import { themeColors } from "../../theme/palette"
+
 export const styles = {
   container: {
     display: "flex",
@@ -10,7 +12,8 @@ export const styles = {
       xl: "end",
       lg: "stretch",
     },
-    py: "3.5rem",
+    paddingTop: "3.5rem",
+    paddingBottom: "6rem",
     px: {
       xs: "1.375rem",
       sm: "1.375rem",
@@ -69,8 +72,17 @@ export const styles = {
     },
     alignItems: "center",
   },
-  mobileButton: {
+  mobileButtonContainer: {
+    position: "fixed",
     width: "100%",
+    bottom: 0,
+    height: "4rem",
+    backgroundColor: themeColors.white,
+    borderTop: `1px solid ${themeColors.light_gray}`,
+    paddingTop: "1rem",
+    paddingBottom: "0.5rem",
+    paddingLeft: "1.375rem",
+    paddingRight: "1.375rem",
     display: {
       xs: "flex",
       sm: "flex",

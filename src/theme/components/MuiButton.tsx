@@ -11,7 +11,7 @@ const MuiButton: Partial<Components["MuiButton"]> = {
       fontWeight: 400,
       lineHeight: "1rem",
       fontSize: "0.875rem",
-      border: `0.125rem solid`,
+      border: `0.1rem solid`,
       // "& svg": {
       //   transition: animation.transition,
       //   fill: palette.themeColors.buttonText,
@@ -19,6 +19,7 @@ const MuiButton: Partial<Components["MuiButton"]> = {
       //   width: 16,
       // },
       "&:hover": {
+        border: `0.1rem solid`,
         // backgroundColor: palette.themeColors.button,
         // color: `${palette.themeColors.black} !important`,
         // border: `1px solid ${palette.themeColors.button}`,
@@ -37,7 +38,7 @@ const MuiButton: Partial<Components["MuiButton"]> = {
         // },
       },
       "&:focus": {
-        border: `0.125rem solid ${palette.themeColors.focus}`,
+        border: `0.1rem solid ${palette.themeColors.focus}`,
       },
       "&.Mui-disabled": {
         color: `${palette.themeColors.gray} !important`,
@@ -59,11 +60,27 @@ const MuiButton: Partial<Components["MuiButton"]> = {
       },
     },
     {
+      props: { size: "medium" },
+      style: {
+        fontSize: ""
+      },
+    },
+    {
+      props: { color: "error" },
+      style: {
+        borderColor: palette.themeColors.red,
+        "&:svg": {
+          fill: palette.themeColors.white,
+          stroke: palette.themeColors.white,
+        },
+      },
+    },
+    {
       props: { variant: "outlined" },
       style: {
         // height: 50,
         // width: "100%",
-        border: "0.07rem solid",
+        // border: "0.1rem solid",
         // letterSpacing: "0.15rem",
         // fontSize: "0.75rem",
         // lineHeight: "16px",

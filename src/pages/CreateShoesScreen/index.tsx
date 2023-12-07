@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
@@ -15,7 +15,8 @@ import { Shoes } from "../../types";
 import { Store } from "../../App";
 import { DrawerForm } from "../../types";
 import ShoesCard from "../../components/ShoesCard";
-import Grid from "@mui/material/Grid";
+import Filters from "../../components/Filters";
+import { FilterState } from "../../types";
 
 const ALL_SHOES = [
   {
@@ -63,12 +64,30 @@ const ALL_SHOES = [
     size: 8.5,
     rating: 2,
   },
+  {
+    _id: "6",
+    name: "Addidas",
+    brand: "Oznova",
+    price: 150,
+    year: 2019,
+    size: 10,
+    rating: 4,
+  },
+  {
+    _id: "7",
+    name: "Puma",
+    brand: "Nitro",
+    price: 90,
+    year: 2020,
+    size: 8.5,
+    rating: 2,
+  },
 ];
 
 const CreateShoesScreen = (): JSX.Element => {
   const [isDrawer, setIsDrawer] = useState<boolean>(false);
-  const [allShoes, setAllShouse] = useState<Shoes[]>([]);
-
+  const [allShoes, setAllShouse] = useState<Array<Shoes>>(ALL_SHOES);
+  const [activeTab, setActiveTab] = useState<FilterState>("year");
   const { lastUpdated, shouldReload } = useContext(Store);
 
   const addWithLoading = useWithLoading(addNewShoes);
@@ -88,20 +107,37 @@ const CreateShoesScreen = (): JSX.Element => {
     setIsDrawer(false);
   };
 
-  useEffect(() => {
-    getAllShoes().then(setAllShouse);
-  }, [getAllShoes, lastUpdated]);
+  const sortShoes = () => {
+    switch (activeTab) {
+      case "year":
+        setAllShouse(allShoes.toSorted((a, b) => a.year - b.year));
+        return;
+      case "size":
+        setAllShouse(allShoes.toSorted((a, b) => a.size - b.size));
+        return;
+      case "price":
+        setAllShouse(allShoes.toSorted((a, b) => a.price - b.price));
+        return;
+      default:
+        setAllShouse(allShoes);
+    }
+  };
+
+  // useEffect(() => {
+  //   getAllShoes().then(setAllShouse);
+  // }, [getAllShoes, lastUpdated]);
 
   useEffect(() => {
-    console.log(allShoes);
-  }, [getAllShoes, lastUpdated, allShoes]);
+    sortShoes();
+  }, [activeTab]);
 
   return (
     <Box component="main" sx={styles.container}>
       <SearchHeader openDrawer={openDrawer} />
+      <Filters activeTab={activeTab} setActiveTab={setActiveTab} />
       <Stack
         width="100%"
-        spacing={{ xs: 1, sm: 2, md: 4, xl: 4, lg: "1.25rem" }}
+        spacing={{ xs: 1, sm: 2, md: 4, xl: 4, lg: "auto" }}
         display="flex"
         // alignItems="stretch"
         direction={{
@@ -121,7 +157,7 @@ const CreateShoesScreen = (): JSX.Element => {
         useFlexGap
         flexWrap="wrap"
       >
-        {ALL_SHOES.map((shoes, i) => (
+        {allShoes.map((shoes, i) => (
           <ShoesCard shoes={shoes} key={shoes._id} />
         ))}
       </Stack>
@@ -145,7 +181,7 @@ const CreateShoesScreen = (): JSX.Element => {
           </Typography>
         </Stack>
       </Stack> */}
-      <Stack mt="5rem" sx={styles.mobileButton}>
+      <Stack mt="5rem" sx={styles.mobileButtonContainer}>
         <Button
           startIcon={<PlusIcon />}
           size="large"
