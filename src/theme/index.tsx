@@ -52,7 +52,14 @@ theme.typography.h1 = {
 theme.typography.h2 = {
   fontFamily: "Boxing",
   fontWeight: 400,
-  fontSize: "2.25rem"
+  fontSize: "2.25rem",
+};
+
+theme.typography.h3 = {
+  fontFamily: "Excon-Bold",
+  fontWeight: 700,
+  fontSize: "1.5rem",
+  lineHeight: "2.125rem"
 };
 
 theme.typography.body1 = {
@@ -83,6 +90,20 @@ theme.typography.body2 = {
   fontSize: "1rem",
   lineHeight: "1.5rem",
   textAlign: "center",
+};
+
+theme.typography.subtitle1 = {
+  fontFamily: "Excon-Regular",
+  fontSize: "1rem",
+  lineHeight: "1.5rem",
+  textAlign: "left",
+  fontWeight: 400,
+};
+theme.typography.subtitle2 = {
+  fontFamily: "Excon-Bold",
+  fontWeight: 700,
+  fontSize: "1rem",
+  lineHeight: "1.5rem",
 };
 
 // theme.typography. = {
