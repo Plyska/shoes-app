@@ -1,4 +1,4 @@
-import { themeColors } from "../../theme/palette"
+import { themeColors } from "../../theme/palette";
 
 export const styles = {
   container: {
@@ -23,6 +23,7 @@ export const styles = {
     },
   },
   header: {
+    width: "100%",
     display: {
       xs: "block",
       sm: "block",
@@ -50,8 +51,6 @@ export const styles = {
       xl: "1rem",
       lg: "1rem",
     },
-    py: "0.75rem",
-    px: "1rem",
   },
   createImage: {
     width: {
@@ -63,6 +62,7 @@ export const styles = {
     },
   },
   buttonContainer: {
+    minWidth: "15rem",
     display: {
       xs: "none",
       sm: "none",
@@ -71,8 +71,10 @@ export const styles = {
       lg: "flex",
     },
     alignItems: "center",
+    justifyContent: "flex-end",
   },
   mobileButtonContainer: {
+    mt: "5rem",
     position: "fixed",
     width: "100%",
     bottom: 0,
@@ -89,6 +91,36 @@ export const styles = {
       md: "flex",
       xl: "none",
       lg: "none",
+    },
+  },
+  filtersContainer: {
+    display: {
+      xs: "none",
+      sm: "none",
+      md: "none",
+      xl: "flex",
+      lg: "flex",
+    },
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  filtersMobileContainer: {
+    display: {
+      xs: "flex",
+      sm: "flex",
+      md: "flex",
+      xl: "none",
+      lg: "none",
+    },
+  },
+  cardContainer: {
+    spacing: { xs: 1, sm: 2, md: 2, xl: "auto", lg: "auto" },
+    direction: {
+      xs: "column",
+      sm: "column",
+      md: "column",
+      xl: "row",
+      lg: "row",
     },
   },
 };

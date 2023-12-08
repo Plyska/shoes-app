@@ -3,11 +3,11 @@ export const styles = {
     paddingTop: "1.5rem",
     paddingBottom: "1rem",
     display: {
-        xs: "none",
-        sm: "none",
-        md: "none",
-        xl: "flex",
-        lg: "flex"
+      xs: "none",
+      sm: "none",
+      md: "none",
+      xl: "flex",
+      lg: "flex",
     },
     justifyContent: "flex-end",
     alignItems: "center",
@@ -20,5 +20,16 @@ export const styles = {
   },
   filterText: {
     paddingRight: "1.25rem",
+  },
+  mobileContainer: {
+    my: "1rem",
+    width: "100%",
+    display: {
+      xs: "flex",
+      sm: "flex",
+      md: "flex",
+      xl: "none",
+      lg: "none",
+    },
   },
 };

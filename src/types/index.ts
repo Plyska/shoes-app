@@ -12,3 +12,10 @@ export interface Shoes extends DrawerForm {
 }
 
 export type FilterState = "year" | "size" | "price";
+
+export interface FiltersData {
+  title: string;
+  value: FilterState;
+  Icon: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+  IconActive: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
+}

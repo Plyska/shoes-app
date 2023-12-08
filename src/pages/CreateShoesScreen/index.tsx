@@ -17,6 +17,11 @@ import { DrawerForm } from "../../types";
 import ShoesCard from "../../components/ShoesCard";
 import Filters from "../../components/Filters";
 import { FilterState } from "../../types";
+import { ResponsiveStyleValue, SxProps, SystemProps } from "@mui/system";
+
+type DirectionType = ResponsiveStyleValue<
+  "row" | "row-reverse" | "column" | "column-reverse"
+>;
 
 const ALL_SHOES = [
   {
@@ -133,27 +138,21 @@ const CreateShoesScreen = (): JSX.Element => {
 
   return (
     <Box component="main" sx={styles.container}>
-      <SearchHeader openDrawer={openDrawer} />
-      <Filters activeTab={activeTab} setActiveTab={setActiveTab} />
+      <SearchHeader
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        openDrawer={openDrawer}
+      />
+      <Box sx={styles.filtersContainer}>
+        <Filters activeTab={activeTab} setActiveTab={setActiveTab} />
+      </Box>
       <Stack
         width="100%"
-        spacing={{ xs: 1, sm: 2, md: 4, xl: 4, lg: "auto" }}
+        spacing={styles.cardContainer.spacing}
         display="flex"
-        // alignItems="stretch"
-        direction={{
-          xs: "column",
-          sm: "column",
-          md: "column",
-          xl: "row",
-          lg: "row",
-        }}
-        // display={{
-        //   xs: "block",
-        //   sm: "block",
-        //   md: "block",
-        //   xl: "flex",
-        //   lg: "flex",
-        // }}
+        justifyContent="space-between"
+        direction={styles.cardContainer.direction as DirectionType}
+        mt="1rem"
         useFlexGap
         flexWrap="wrap"
       >
@@ -181,7 +180,7 @@ const CreateShoesScreen = (): JSX.Element => {
           </Typography>
         </Stack>
       </Stack> */}
-      <Stack mt="5rem" sx={styles.mobileButtonContainer}>
+      <Box sx={styles.mobileButtonContainer}>
         <Button
           startIcon={<PlusIcon />}
           size="large"
@@ -190,7 +189,7 @@ const CreateShoesScreen = (): JSX.Element => {
         >
           Add new sneakers
         </Button>
-      </Stack>
+      </Box>
       <MuiDrawer
         isDrawer={isDrawer}
         closeDrawer={closeDrawer}
