@@ -10,7 +10,7 @@ interface ShoesCardProps {
 }
 
 const ShoesCard = ({ shoes }: ShoesCardProps): JSX.Element => {
-  console.log(shoes);
+  
   return (
     <Box sx={styles.container}>
       <Box sx={styles.titleNButtonContainer}>
@@ -28,7 +28,7 @@ const ShoesCard = ({ shoes }: ShoesCardProps): JSX.Element => {
           </Typography>
         </Box>
         <Box sx={styles.ratingContainer}>
-          <Rating value={shoes.rating} />
+          <Rating value={shoes.rating} readOnly/>
         </Box>
       </Box>
       <Box sx={styles.bottomContentContainer}>
