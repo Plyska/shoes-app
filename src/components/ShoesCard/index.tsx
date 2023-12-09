@@ -7,9 +7,14 @@ import Rating from "@mui/material/Rating";
 
 interface ShoesCardProps {
   shoes: Shoes;
+  deleteShoes: (shoesId: string) => Promise<void>
 }
 
-const ShoesCard = ({ shoes }: ShoesCardProps): JSX.Element => {
+const ShoesCard = ({ shoes, deleteShoes }: ShoesCardProps): JSX.Element => {
+
+  const handleDelete = () => {
+    deleteShoes(shoes._id)
+  }
   
   return (
     <Box sx={styles.container}>
@@ -17,7 +22,7 @@ const ShoesCard = ({ shoes }: ShoesCardProps): JSX.Element => {
         <Box>
           <Typography variant="h3">{shoes.brand}</Typography>
         </Box>
-        <Box onClick={() => null}>
+        <Box onClick={handleDelete}>
           <TrashIcon />
         </Box>
       </Box>
