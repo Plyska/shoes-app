@@ -1,12 +1,10 @@
-import { useState, useContext, useEffect, useCallback } from "react";
-import Typography from "@mui/material/Typography";
+import { useState, useContext, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { styles } from "./styles";
 import SearchHeader from "./SearchHeader";
-import CreateImage from "../../assets/create.png";
 import MuiDrawer from "../../components/Drawer";
 import { addNewShoes } from "../../api/addNewShoes";
 import { useWithLoading } from "../../hooks/useWithLoading";
@@ -17,7 +15,8 @@ import { DrawerForm } from "../../types";
 import ShoesCard from "../../components/ShoesCard";
 import Filters from "../../components/Filters";
 import { FilterState } from "../../types";
-import { ResponsiveStyleValue, SxProps, SystemProps } from "@mui/system";
+import { ResponsiveStyleValue } from "@mui/system";
+import { deleteShoes as deleteShoesEndpoint } from "../../api/deleteShoes";
 
 type DirectionType = ResponsiveStyleValue<
   "row" | "row-reverse" | "column" | "column-reverse"
@@ -91,18 +90,24 @@ const ALL_SHOES = [
 
 const CreateShoesScreen = (): JSX.Element => {
   const [isDrawer, setIsDrawer] = useState<boolean>(false);
-  const [allShoes, setAllShouse] = useState<Array<Shoes>>(ALL_SHOES);
+  const [allShoes, setAllShouse] = useState<Array<Shoes>>([]);
   const [activeTab, setActiveTab] = useState<FilterState>("year");
   const { lastUpdated, shouldReload } = useContext(Store);
 
   const addWithLoading = useWithLoading(addNewShoes);
   const getAllShoes = useWithLoading(getAllShoesEndpoint);
+  const deleteWithLoading = useWithLoading(deleteShoesEndpoint);
 
   const addShoes = async (shoes: DrawerForm) => {
     await addWithLoading(shoes);
     closeDrawer();
     shouldReload();
   };
+
+  const deleteShoes = async (shoesId: string) => {
+    await deleteWithLoading(shoesId);
+    shouldReload();
+  }
 
   const openDrawer = () => {
     setIsDrawer(true);
@@ -128,9 +133,9 @@ const CreateShoesScreen = (): JSX.Element => {
     }
   };
 
-  // useEffect(() => {
-  //   getAllShoes().then(setAllShouse);
-  // }, [getAllShoes, lastUpdated]);
+  useEffect(() => {
+    getAllShoes().then(setAllShouse);
+  }, [getAllShoes, lastUpdated]);
 
   useEffect(() => {
     sortShoes();
@@ -150,14 +155,14 @@ const CreateShoesScreen = (): JSX.Element => {
         width="100%"
         spacing={styles.cardContainer.spacing}
         display="flex"
-        justifyContent="space-between"
+        // justifyContent="space-between"
         direction={styles.cardContainer.direction as DirectionType}
         mt="1rem"
         useFlexGap
         flexWrap="wrap"
       >
         {allShoes.map((shoes, i) => (
-          <ShoesCard shoes={shoes} key={shoes._id} />
+          <ShoesCard shoes={shoes} key={shoes._id} deleteShoes={deleteShoes} />
         ))}
       </Stack>
 

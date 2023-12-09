@@ -18,7 +18,6 @@ const Filters = ({
   activeTab = "year",
   setActiveTab,
 }: FiltersProps): JSX.Element => {
-  console.log(activeTab);
   const handleFilterTab = (value: FilterState) => () => {
     setActiveTab(value);
   };
