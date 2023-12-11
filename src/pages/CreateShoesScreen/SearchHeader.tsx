@@ -8,10 +8,10 @@ import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 import { styles } from "./styles";
 import Filters from "../../components/Filters";
-import { FilterState } from "../../types";
+import { FilterState, Shoes } from "../../types";
 
 interface SearchHeaderProps {
-  openDrawer: () => void;
+  openDrawer: (shoes: Shoes | {}) => void;
   activeTab: FilterState;
   setActiveTab: (tab: FilterState) => void;
 }
@@ -21,6 +21,12 @@ const SearchHeader = ({
   activeTab,
   setActiveTab,
 }: SearchHeaderProps): JSX.Element => {
+  
+  
+  const handleClick = () => {
+    openDrawer({});
+  };
+
   return (
     <Box component="section" sx={styles.header}>
       <Box>
@@ -55,7 +61,7 @@ const SearchHeader = ({
             startIcon={<PlusIcon />}
             size="large"
             variant="contained"
-            onClick={openDrawer}
+            onClick={handleClick}
           >
             Add new sneakers
           </Button>

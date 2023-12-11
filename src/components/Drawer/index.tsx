@@ -11,19 +11,31 @@ import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { drawerFormValidator } from "../../validations/DrawerFormValidator";
-import { DrawerForm } from "../../types";
+import { DrawerForm, Shoes } from "../../types";
+import { useMemo } from "react";
 
 interface MuiDrawerProps {
   isDrawer: boolean;
   closeDrawer: () => void;
   addShoes: (shoes: DrawerForm) => void;
+  selectedShoes: Shoes | {};
 }
+
 
 const MuiDrawer = ({
   isDrawer,
   closeDrawer,
   addShoes,
+  selectedShoes,
 }: MuiDrawerProps): JSX.Element => {
+
+  const isEdit = useMemo(
+    () => !!Object.keys(selectedShoes).length,
+    [selectedShoes]
+  );
+
+  console.log(isEdit, selectedShoes.name);
+
   const {
     register,
     handleSubmit,
@@ -32,12 +44,21 @@ const MuiDrawer = ({
     formState: { errors },
   } = useForm<DrawerForm>({
     resolver: yupResolver(drawerFormValidator),
+    defaultValues: {
+      // name: isEdit && selectedShoes.name, 
+      // brand: isEdit ? selectedShoes.brand : "", 
+      // price: isEdit ? selectedShoes.price : "", 
+      // size: isEdit ? selectedShoes.size : "", 
+      // year: isEdit ? selectedShoes.year : "", 
+      // rating: isEdit ? selectedShoes.rating : "", 
+    }
   });
 
   const onSubmit: SubmitHandler<DrawerForm> = async (shoes) => {
-    reset();
-    closeDrawer();
-    addShoes(shoes);
+    console.log(shoes);
+    // reset();
+    // closeDrawer();
+    // addShoes(shoes);
   };
 
   return (

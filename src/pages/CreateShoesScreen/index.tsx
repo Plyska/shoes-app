@@ -17,6 +17,7 @@ import Filters from "../../components/Filters";
 import { FilterState } from "../../types";
 import { ResponsiveStyleValue } from "@mui/system";
 import { deleteShoes as deleteShoesEndpoint } from "../../api/deleteShoes";
+import { editShoes as editShoesEndpoint } from "../../api/editShoes";
 
 type DirectionType = ResponsiveStyleValue<
   "row" | "row-reverse" | "column" | "column-reverse"
@@ -90,13 +91,15 @@ const ALL_SHOES = [
 
 const CreateShoesScreen = (): JSX.Element => {
   const [isDrawer, setIsDrawer] = useState<boolean>(false);
-  const [allShoes, setAllShouse] = useState<Array<Shoes>>([]);
+  const [allShoes, setAllShouse] = useState<Array<Shoes>>(ALL_SHOES);
   const [activeTab, setActiveTab] = useState<FilterState>("year");
+  const [selectedShoes, setSelectedShoes] = useState<Shoes | {}>({});
   const { lastUpdated, shouldReload } = useContext(Store);
 
   const addWithLoading = useWithLoading(addNewShoes);
   const getAllShoes = useWithLoading(getAllShoesEndpoint);
   const deleteWithLoading = useWithLoading(deleteShoesEndpoint);
+  const editWithLoading = useWithLoading(editShoesEndpoint);
 
   const addShoes = async (shoes: DrawerForm) => {
     await addWithLoading(shoes);
@@ -105,11 +108,17 @@ const CreateShoesScreen = (): JSX.Element => {
   };
 
   const deleteShoes = async (shoesId: string) => {
-    await deleteWithLoading(shoesId);
+    // await deleteWithLoading(shoesId);
     shouldReload();
-  }
+  };
 
-  const openDrawer = () => {
+  const editShoes = async (shoesId: string, shoes: DrawerForm) => {
+    await editWithLoading(shoesId, shoes);
+    shouldReload();
+  };
+
+  const openDrawer = (shoes: Shoes | {}) => {
+    setSelectedShoes(shoes);
     setIsDrawer(true);
   };
 
@@ -133,9 +142,9 @@ const CreateShoesScreen = (): JSX.Element => {
     }
   };
 
-  useEffect(() => {
-    getAllShoes().then(setAllShouse);
-  }, [getAllShoes, lastUpdated]);
+  // useEffect(() => {
+  //   getAllShoes().then(setAllShouse);
+  // }, [getAllShoes, lastUpdated]);
 
   useEffect(() => {
     sortShoes();
@@ -162,7 +171,12 @@ const CreateShoesScreen = (): JSX.Element => {
         flexWrap="wrap"
       >
         {allShoes.map((shoes, i) => (
-          <ShoesCard shoes={shoes} key={shoes._id} deleteShoes={deleteShoes} />
+          <ShoesCard
+            shoes={shoes}
+            key={shoes._id}
+            deleteShoes={deleteShoes}
+            openDrawer={openDrawer}
+          />
         ))}
       </Stack>
 
@@ -196,6 +210,7 @@ const CreateShoesScreen = (): JSX.Element => {
         </Button>
       </Box>
       <MuiDrawer
+        selectedShoes={selectedShoes}
         isDrawer={isDrawer}
         closeDrawer={closeDrawer}
         addShoes={addShoes}
