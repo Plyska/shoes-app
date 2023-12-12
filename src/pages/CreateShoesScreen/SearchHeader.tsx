@@ -13,16 +13,14 @@ import { FilterState, Shoes } from "../../types";
 interface SearchHeaderProps {
   openDrawer: (shoes: Shoes | {}) => void;
   activeTab: FilterState;
-  setActiveTab: (tab: FilterState) => void;
+  search?: string | null;
 }
 
 const SearchHeader = ({
   openDrawer,
   activeTab,
-  setActiveTab,
+  search,
 }: SearchHeaderProps): JSX.Element => {
-  
-  
   const handleClick = () => {
     openDrawer({});
   };
@@ -33,7 +31,7 @@ const SearchHeader = ({
         <Typography variant="h1">Your collection</Typography>
       </Box>
       <Box sx={styles.filtersMobileContainer}>
-        <Filters activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Filters activeTab={activeTab} />
       </Box>
       <Stack display="flex" direction="row" justifyContent="flex-end">
         <Box
@@ -46,6 +44,7 @@ const SearchHeader = ({
           <TextField
             size="small"
             sx={styles.input}
+            defaultValue={search}
             placeholder="Search"
             InputProps={{
               startAdornment: (

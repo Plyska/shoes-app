@@ -18,9 +18,8 @@ interface MuiDrawerProps {
   isDrawer: boolean;
   closeDrawer: () => void;
   addShoes: (shoes: DrawerForm) => void;
-  selectedShoes: Shoes | {};
+  selectedShoes: Shoes;
 }
-
 
 const MuiDrawer = ({
   isDrawer,
@@ -28,13 +27,12 @@ const MuiDrawer = ({
   addShoes,
   selectedShoes,
 }: MuiDrawerProps): JSX.Element => {
+  // const isEdit = useMemo(
+  //   () => !!Object.keys(selectedShoes).length,
+  //   [selectedShoes]
+  // );
 
-  const isEdit = useMemo(
-    () => !!Object.keys(selectedShoes).length,
-    [selectedShoes]
-  );
-
-  console.log(isEdit, selectedShoes.name);
+  // console.log(selectedShoes);
 
   const {
     register,
@@ -43,15 +41,8 @@ const MuiDrawer = ({
     reset,
     formState: { errors },
   } = useForm<DrawerForm>({
+    defaultValues: {...selectedShoes},
     resolver: yupResolver(drawerFormValidator),
-    defaultValues: {
-      // name: isEdit && selectedShoes.name, 
-      // brand: isEdit ? selectedShoes.brand : "", 
-      // price: isEdit ? selectedShoes.price : "", 
-      // size: isEdit ? selectedShoes.size : "", 
-      // year: isEdit ? selectedShoes.year : "", 
-      // rating: isEdit ? selectedShoes.rating : "", 
-    }
   });
 
   const onSubmit: SubmitHandler<DrawerForm> = async (shoes) => {

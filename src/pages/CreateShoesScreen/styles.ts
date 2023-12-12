@@ -92,6 +92,12 @@ export const styles = {
       xl: "none",
       lg: "none",
     },
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  mobileButton: {
+    width: "85%",
+    py: "0.75rem"
   },
   filtersContainer: {
     display: {

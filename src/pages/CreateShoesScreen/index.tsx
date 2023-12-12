@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import Box from "@mui/material/Box";
 import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import Button from "@mui/material/Button";
@@ -18,6 +18,9 @@ import { FilterState } from "../../types";
 import { ResponsiveStyleValue } from "@mui/system";
 import { deleteShoes as deleteShoesEndpoint } from "../../api/deleteShoes";
 import { editShoes as editShoesEndpoint } from "../../api/editShoes";
+import { useNavigate } from "react-router-dom";
+import { useSearchParams, createSearchParams } from "react-router-dom";
+import { sortResolver, sortShoes, filtersData } from "../../constants/helpers";
 
 type DirectionType = ResponsiveStyleValue<
   "row" | "row-reverse" | "column" | "column-reverse"
@@ -92,9 +95,15 @@ const ALL_SHOES = [
 const CreateShoesScreen = (): JSX.Element => {
   const [isDrawer, setIsDrawer] = useState<boolean>(false);
   const [allShoes, setAllShouse] = useState<Array<Shoes>>(ALL_SHOES);
-  const [activeTab, setActiveTab] = useState<FilterState>("year");
   const [selectedShoes, setSelectedShoes] = useState<Shoes | {}>({});
   const { lastUpdated, shouldReload } = useContext(Store);
+
+  const [searchParams] = useSearchParams();
+
+  const activeTab = (searchParams.get("sortBy") as FilterState) || "year";
+  const search = searchParams.get("search") || "";
+
+  const navigate = useNavigate();
 
   const addWithLoading = useWithLoading(addNewShoes);
   const getAllShoes = useWithLoading(getAllShoesEndpoint);
@@ -126,51 +135,41 @@ const CreateShoesScreen = (): JSX.Element => {
     setIsDrawer(false);
   };
 
-  const sortShoes = () => {
-    switch (activeTab) {
-      case "year":
-        setAllShouse(allShoes.toSorted((a, b) => a.year - b.year));
-        return;
-      case "size":
-        setAllShouse(allShoes.toSorted((a, b) => a.size - b.size));
-        return;
-      case "price":
-        setAllShouse(allShoes.toSorted((a, b) => a.price - b.price));
-        return;
-      default:
-        setAllShouse(allShoes);
-    }
-  };
-
   // useEffect(() => {
   //   getAllShoes().then(setAllShouse);
   // }, [getAllShoes, lastUpdated]);
 
   useEffect(() => {
-    sortShoes();
-  }, [activeTab]);
+    const sortBy = sortResolver(activeTab);
+    if (sortBy !== activeTab)
+      navigate({
+        pathname: "",
+        search: createSearchParams({
+          sortBy: sortBy,
+        }).toString(),
+      });
+  }, [activeTab, navigate]);
 
   return (
     <Box component="main" sx={styles.container}>
       <SearchHeader
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
         openDrawer={openDrawer}
+        search={search}
       />
       <Box sx={styles.filtersContainer}>
-        <Filters activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Filters activeTab={activeTab} />
       </Box>
       <Stack
         width="100%"
         spacing={styles.cardContainer.spacing}
         display="flex"
-        // justifyContent="space-between"
         direction={styles.cardContainer.direction as DirectionType}
         mt="1rem"
         useFlexGap
         flexWrap="wrap"
       >
-        {allShoes.map((shoes, i) => (
+        {filtersData(sortShoes(activeTab, allShoes), search).map((shoes) => (
           <ShoesCard
             shoes={shoes}
             key={shoes._id}
@@ -202,19 +201,22 @@ const CreateShoesScreen = (): JSX.Element => {
       <Box sx={styles.mobileButtonContainer}>
         <Button
           startIcon={<PlusIcon />}
-          size="large"
+          size="medium"
           variant="contained"
           onClick={openDrawer}
+          sx={styles.mobileButton}
         >
           Add new sneakers
         </Button>
       </Box>
-      <MuiDrawer
-        selectedShoes={selectedShoes}
-        isDrawer={isDrawer}
-        closeDrawer={closeDrawer}
-        addShoes={addShoes}
-      />
+      {isDrawer && (
+        <MuiDrawer
+          selectedShoes={selectedShoes as Shoes}
+          isDrawer={isDrawer}
+          closeDrawer={closeDrawer}
+          addShoes={addShoes}
+        />
+      )}
     </Box>
   );
 };

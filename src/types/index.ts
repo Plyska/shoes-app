@@ -1,4 +1,7 @@
-export interface DrawerForm {
+import { filters } from "../constants";
+
+export interface Shoes {
+  _id: string;
   name: string;
   brand: string;
   price: number;
@@ -7,11 +10,11 @@ export interface DrawerForm {
   rating: number | null;
 }
 
-export interface Shoes extends DrawerForm {
-  _id: string;
-}
+export type ValueOf<T> = T[keyof T];
 
-export type FilterState = "year" | "size" | "price";
+export type DrawerForm = Omit<Shoes, "_id">
+
+export type FilterState = ValueOf<typeof filters>
 
 export interface FiltersData {
   title: string;

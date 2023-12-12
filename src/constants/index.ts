@@ -8,6 +8,12 @@ import { FiltersData } from "../types";
 
 export const KEY = process.env.REACT_APP_KEY;
 
+export const filters = {
+  YEAR: "year",
+  SIZE: "size",
+  PRICE: "price",
+} as const;
+
 export const filtersData: FiltersData[] = [
   {
     title: "Oldest Year",
