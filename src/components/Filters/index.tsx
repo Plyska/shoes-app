@@ -4,7 +4,7 @@ import { filtersData } from "../../constants";
 import { styles } from "./styles";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { FilterState, FiltersData } from "../../types";
+import { FilterState, FiltersData, QueryParams } from "../../types";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ReactComponent as SelectIcon } from "../../assets/icons/chevron_down.svg";
@@ -12,10 +12,12 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 
 interface FiltersProps {
   activeTab: FilterState;
+  queryParams: QueryParams;
 }
 
 const Filters = ({
   activeTab = "year",
+  queryParams
 }: FiltersProps): JSX.Element => {
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ const Filters = ({
       pathname: "",
 
       search: createSearchParams({
-        // ...query,
+        ...queryParams,
         sortBy: value,
       }).toString(),
     });

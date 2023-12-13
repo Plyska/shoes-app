@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useCallback } from "react";
+import { useState, useContext, useEffect, useCallback, useMemo } from "react";
 import Box from "@mui/material/Box";
 import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import Button from "@mui/material/Button";
@@ -14,7 +14,7 @@ import { Store } from "../../App";
 import { DrawerForm } from "../../types";
 import ShoesCard from "../../components/ShoesCard";
 import Filters from "../../components/Filters";
-import { FilterState } from "../../types";
+import { FilterState, QueryParams } from "../../types";
 import { ResponsiveStyleValue } from "@mui/system";
 import { deleteShoes as deleteShoesEndpoint } from "../../api/deleteShoes";
 import { editShoes as editShoesEndpoint } from "../../api/editShoes";
@@ -100,6 +100,11 @@ const CreateShoesScreen = (): JSX.Element => {
 
   const [searchParams] = useSearchParams();
 
+  const queryParams = useMemo<QueryParams>(
+    () => Object.fromEntries([...(searchParams as any)]),
+    [searchParams]
+  );
+
   const activeTab = (searchParams.get("sortBy") as FilterState) || "year";
   const search = searchParams.get("search") || "";
 
@@ -126,6 +131,18 @@ const CreateShoesScreen = (): JSX.Element => {
     shouldReload();
   };
 
+  const handleSubmitEndpoint = async (
+    shoes: DrawerForm,
+    id: string = ""
+  ): Promise<void> => {
+    const isEdit = !!Object.keys(selectedShoes).length;
+    if (isEdit) {
+      await editShoes(id, shoes);
+    } else {
+      await addShoes(shoes);
+    }
+  };
+
   const openDrawer = (shoes: Shoes | {}) => {
     setSelectedShoes(shoes);
     setIsDrawer(true);
@@ -139,26 +156,16 @@ const CreateShoesScreen = (): JSX.Element => {
   //   getAllShoes().then(setAllShouse);
   // }, [getAllShoes, lastUpdated]);
 
-  useEffect(() => {
-    const sortBy = sortResolver(activeTab);
-    if (sortBy !== activeTab)
-      navigate({
-        pathname: "",
-        search: createSearchParams({
-          sortBy: sortBy,
-        }).toString(),
-      });
-  }, [activeTab, navigate]);
-
   return (
     <Box component="main" sx={styles.container}>
       <SearchHeader
         activeTab={activeTab}
         openDrawer={openDrawer}
         search={search}
+        queryParams={queryParams}
       />
       <Box sx={styles.filtersContainer}>
-        <Filters activeTab={activeTab} />
+        <Filters activeTab={activeTab} queryParams={queryParams} />
       </Box>
       <Stack
         width="100%"
@@ -214,7 +221,8 @@ const CreateShoesScreen = (): JSX.Element => {
           selectedShoes={selectedShoes as Shoes}
           isDrawer={isDrawer}
           closeDrawer={closeDrawer}
-          addShoes={addShoes}
+          handleSubmitEndpoint={handleSubmitEndpoint}
+          //addShoes={addShoes}
         />
       )}
     </Box>

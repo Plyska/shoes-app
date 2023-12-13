@@ -17,8 +17,9 @@ import { useMemo } from "react";
 interface MuiDrawerProps {
   isDrawer: boolean;
   closeDrawer: () => void;
-  addShoes: (shoes: DrawerForm) => void;
+  addShoes?: (shoes: DrawerForm) => void;
   selectedShoes: Shoes;
+  handleSubmitEndpoint: (shoes: DrawerForm, id?: string) => Promise<void>
 }
 
 const MuiDrawer = ({
@@ -26,13 +27,8 @@ const MuiDrawer = ({
   closeDrawer,
   addShoes,
   selectedShoes,
+  handleSubmitEndpoint
 }: MuiDrawerProps): JSX.Element => {
-  // const isEdit = useMemo(
-  //   () => !!Object.keys(selectedShoes).length,
-  //   [selectedShoes]
-  // );
-
-  // console.log(selectedShoes);
 
   const {
     register,
@@ -49,6 +45,7 @@ const MuiDrawer = ({
     console.log(shoes);
     // reset();
     // closeDrawer();
+    handleSubmitEndpoint(shoes, selectedShoes._id);
     // addShoes(shoes);
   };
 

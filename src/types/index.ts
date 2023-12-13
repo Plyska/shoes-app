@@ -22,3 +22,8 @@ export interface FiltersData {
   Icon: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
   IconActive: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
 }
+
+export interface QueryParams {
+  sortBy?: FilterState;
+  search?: string;
+}
