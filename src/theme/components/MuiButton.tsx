@@ -11,7 +11,7 @@ const MuiButton: Partial<Components["MuiButton"]> = {
       fontWeight: 400,
       lineHeight: "1rem",
       fontSize: "0.875rem",
-      border: `0.1rem solid`,
+      // border: `0.1rem solid`,
       // "& svg": {
       //   transition: animation.transition,
       //   fill: palette.themeColors.buttonText,
@@ -19,8 +19,8 @@ const MuiButton: Partial<Components["MuiButton"]> = {
       //   width: 16,
       // },
       "&:hover": {
-        border: `0.1rem solid`,
-        // backgroundColor: palette.themeColors.button,
+        // border: `0.1rem solid`,
+        
         // color: `${palette.themeColors.black} !important`,
         // border: `1px solid ${palette.themeColors.button}`,
         // "& svg": {
@@ -38,7 +38,7 @@ const MuiButton: Partial<Components["MuiButton"]> = {
         // },
       },
       "&:focus": {
-        border: `0.1rem solid ${palette.themeColors.focus}`,
+        borderColor: palette.themeColors.focus,
       },
       "&.Mui-disabled": {
         color: `${palette.themeColors.gray} !important`,

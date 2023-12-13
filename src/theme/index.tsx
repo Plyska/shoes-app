@@ -4,6 +4,7 @@ import { palette } from "./palette";
 import MuiButton from "./components/MuiButton";
 import MuiTextField from "./components/MuiTextField";
 import MuiSelect from "./components/MuiSelect";
+import MuiRating from "./components/MuiRating";
 
 const theme = createTheme({
   palette: {
@@ -18,6 +19,7 @@ const theme = createTheme({
     MuiButton,
     MuiTextField,
     MuiSelect,
+    MuiRating
   },
 });
 

@@ -11,19 +11,25 @@ import { ReactComponent as PlusIcon } from "../../assets/icons/plus.svg";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { drawerFormValidator } from "../../validations/DrawerFormValidator";
-import { DrawerForm } from "../../types";
+import { DrawerForm, Shoes } from "../../types";
+import { useMemo } from "react";
 
 interface MuiDrawerProps {
   isDrawer: boolean;
   closeDrawer: () => void;
-  addShoes: (shoes: DrawerForm) => void;
+  addShoes?: (shoes: DrawerForm) => void;
+  selectedShoes: Shoes;
+  handleSubmitEndpoint: (shoes: DrawerForm, id?: string) => Promise<void>
 }
 
 const MuiDrawer = ({
   isDrawer,
   closeDrawer,
   addShoes,
+  selectedShoes,
+  handleSubmitEndpoint
 }: MuiDrawerProps): JSX.Element => {
+
   const {
     register,
     handleSubmit,
@@ -31,13 +37,16 @@ const MuiDrawer = ({
     reset,
     formState: { errors },
   } = useForm<DrawerForm>({
+    defaultValues: {...selectedShoes},
     resolver: yupResolver(drawerFormValidator),
   });
 
   const onSubmit: SubmitHandler<DrawerForm> = async (shoes) => {
-    reset();
-    closeDrawer();
-    addShoes(shoes);
+    console.log(shoes);
+    // reset();
+    // closeDrawer();
+    handleSubmitEndpoint(shoes, selectedShoes._id);
+    // addShoes(shoes);
   };
 
   return (

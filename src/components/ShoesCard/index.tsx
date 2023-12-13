@@ -7,17 +7,26 @@ import Rating from "@mui/material/Rating";
 
 interface ShoesCardProps {
   shoes: Shoes;
-  deleteShoes: (shoesId: string) => Promise<void>
+  deleteShoes: (shoesId: string) => Promise<void>;
+  openDrawer: (shoes: Shoes) => void;
 }
 
-const ShoesCard = ({ shoes, deleteShoes }: ShoesCardProps): JSX.Element => {
+const ShoesCard = ({
+  shoes,
+  deleteShoes,
+  openDrawer,
+}: ShoesCardProps): JSX.Element => {
+  const handleDelete = (e: any) => {
+    e.stopPropagation();
+    deleteShoes(shoes._id);
+  };
 
-  const handleDelete = () => {
-    deleteShoes(shoes._id)
-  }
-  
+  const handleClick = () => {
+    openDrawer(shoes);
+  };
+
   return (
-    <Box sx={styles.container}>
+    <Box sx={styles.container} onClick={handleClick}>
       <Box sx={styles.titleNButtonContainer}>
         <Box>
           <Typography variant="h3">{shoes.brand}</Typography>
@@ -33,7 +42,7 @@ const ShoesCard = ({ shoes, deleteShoes }: ShoesCardProps): JSX.Element => {
           </Typography>
         </Box>
         <Box sx={styles.ratingContainer}>
-          <Rating value={shoes.rating} readOnly/>
+          <Rating value={shoes.rating} readOnly />
         </Box>
       </Box>
       <Box sx={styles.bottomContentContainer}>
