@@ -29,7 +29,7 @@ const MuiDrawer = ({
   selectedShoes,
   handleSubmitEndpoint
 }: MuiDrawerProps): JSX.Element => {
-
+  console.log(selectedShoes)
   const {
     register,
     handleSubmit,
@@ -43,10 +43,9 @@ const MuiDrawer = ({
 
   const onSubmit: SubmitHandler<DrawerForm> = async (shoes) => {
     console.log(shoes);
-    // reset();
-    // closeDrawer();
+    reset();
+    closeDrawer();
     handleSubmitEndpoint(shoes, selectedShoes._id);
-    // addShoes(shoes);
   };
 
   return (

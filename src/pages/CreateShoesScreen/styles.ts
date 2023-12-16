@@ -22,6 +22,15 @@ export const styles = {
       lg: "6.25rem",
     },
   },
+  titleContainer: {
+    mb: {
+      xs: "1rem",
+      sm: "1rem",
+      md: "1rem",
+      xl: 0,
+      lg: 0,
+    },
+  },
   header: {
     width: "100%",
     display: {
@@ -50,6 +59,15 @@ export const styles = {
       md: 0,
       xl: "1rem",
       lg: "1rem",
+    },
+  },
+  shoesImage: {
+    width: {
+      xs: "90%",
+      sm: "90%",
+      md: "90%",
+      xl: "50%",
+      lg: "25%",
     },
   },
   createImage: {
@@ -97,7 +115,7 @@ export const styles = {
   },
   mobileButton: {
     width: "85%",
-    py: "0.75rem"
+    py: "0.75rem",
   },
   filtersContainer: {
     display: {

@@ -15,12 +15,14 @@ import {
   useNavigate,
   createSearchParams,
 } from "react-router-dom";
+import { sortShoes, filtersData } from "../../constants/helpers";
 
 interface SearchHeaderProps {
   openDrawer: (shoes: Shoes | {}) => void;
   activeTab: FilterState;
   search?: string | null;
   queryParams: QueryParams;
+  isFilters: boolean;
 }
 
 const SearchHeader = ({
@@ -28,6 +30,7 @@ const SearchHeader = ({
   activeTab,
   search,
   queryParams,
+  isFilters,
 }: SearchHeaderProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>(search || "");
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,11 +66,15 @@ const SearchHeader = ({
 
   return (
     <Box component="section" sx={styles.header}>
-      <Box>
+      <Box sx={styles.titleContainer}>
         <Typography variant="h1">Your collection</Typography>
       </Box>
       <Box sx={styles.filtersMobileContainer}>
-        <Filters activeTab={activeTab} queryParams={queryParams} />
+        <Filters
+          activeTab={activeTab}
+          queryParams={queryParams}
+          isFilters={isFilters}
+        />
       </Box>
       <Stack display="flex" direction="row" justifyContent="flex-end">
         <Box

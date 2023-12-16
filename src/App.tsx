@@ -4,6 +4,7 @@ import router from "./constants/routes";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
 import "./App.css";
+import { Alert } from "./types";
 
 export const Store = createContext({} as any);
 
@@ -26,12 +27,24 @@ const styles: any = {
 function App() {
   const [isLoading, setLoading] = useState(false);
   const [lastUpdated, setlastUpdated] = useState(0);
+  const [alert, setAlert] = useState<Alert>({
+    show: false,
+    status: "success",
+    message: ""
+  });
 
   const shouldReload = useCallback(() => setlastUpdated(Date.now()), []);
 
   return (
     <Store.Provider
-      value={{ isLoading, setLoading, lastUpdated, shouldReload }}
+      value={{
+        isLoading,
+        setLoading,
+        lastUpdated,
+        shouldReload,
+        alert,
+        setAlert,
+      }}
     >
       <ThemeProvider theme={theme}>
         {isLoading && <div style={styles}>Loading...</div>}

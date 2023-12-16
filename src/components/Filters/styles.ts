@@ -22,7 +22,7 @@ export const styles = {
     paddingRight: "1.25rem",
   },
   mobileContainer: {
-    my: "1rem",
+    mb: "1rem",
     width: "100%",
     display: {
       xs: "flex",

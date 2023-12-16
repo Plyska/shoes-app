@@ -21,6 +21,10 @@ import { editShoes as editShoesEndpoint } from "../../api/editShoes";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams, createSearchParams } from "react-router-dom";
 import { sortResolver, sortShoes, filtersData } from "../../constants/helpers";
+import Typography from "@mui/material/Typography";
+import CreateImage from "../../assets/create.png";
+import ShoesImage from "../../assets/shoes.png";
+import NothingFoundComponent from "./NothingFoundComponent";
 
 type DirectionType = ResponsiveStyleValue<
   "row" | "row-reverse" | "column" | "column-reverse"
@@ -94,11 +98,11 @@ const ALL_SHOES = [
 
 const CreateShoesScreen = (): JSX.Element => {
   const [isDrawer, setIsDrawer] = useState<boolean>(false);
-  const [allShoes, setAllShouse] = useState<Array<Shoes>>(ALL_SHOES);
+  const [allShoes, setAllShouse] = useState<Array<Shoes>>([]);
   const [selectedShoes, setSelectedShoes] = useState<Shoes | {}>({});
-  const { lastUpdated, shouldReload } = useContext(Store);
+  const { lastUpdated, shouldReload, setAlert } = useContext(Store);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const queryParams = useMemo<QueryParams>(
     () => Object.fromEntries([...(searchParams as any)]),
@@ -109,6 +113,11 @@ const CreateShoesScreen = (): JSX.Element => {
   const search = searchParams.get("search") || "";
 
   const navigate = useNavigate();
+
+  const isFilters = useMemo(
+    () => !!filtersData(sortShoes(activeTab, allShoes), search).length,
+    [activeTab, allShoes, search]
+  );
 
   const addWithLoading = useWithLoading(addNewShoes);
   const getAllShoes = useWithLoading(getAllShoesEndpoint);
@@ -136,10 +145,13 @@ const CreateShoesScreen = (): JSX.Element => {
     id: string = ""
   ): Promise<void> => {
     const isEdit = !!Object.keys(selectedShoes).length;
+    console.log(isEdit, selectedShoes);
     if (isEdit) {
       await editShoes(id, shoes);
     } else {
       await addShoes(shoes);
+      searchParams.delete("search");
+      setSearchParams(searchParams);
     }
   };
 
@@ -152,9 +164,11 @@ const CreateShoesScreen = (): JSX.Element => {
     setIsDrawer(false);
   };
 
-  // useEffect(() => {
-  //   getAllShoes().then(setAllShouse);
-  // }, [getAllShoes, lastUpdated]);
+  useEffect(() => {
+    getAllShoes().then((res) => setAllShouse(res || [])).catch(e => console.log("ERROR"));
+
+    console.log(allShoes);
+  }, [getAllShoes, lastUpdated]);
 
   return (
     <Box component="main" sx={styles.container}>
@@ -163,54 +177,65 @@ const CreateShoesScreen = (): JSX.Element => {
         openDrawer={openDrawer}
         search={search}
         queryParams={queryParams}
+        isFilters={isFilters}
       />
-      <Box sx={styles.filtersContainer}>
-        <Filters activeTab={activeTab} queryParams={queryParams} />
-      </Box>
-      <Stack
-        width="100%"
-        spacing={styles.cardContainer.spacing}
-        display="flex"
-        direction={styles.cardContainer.direction as DirectionType}
-        mt="1rem"
-        useFlexGap
-        flexWrap="wrap"
-      >
-        {filtersData(sortShoes(activeTab, allShoes), search).map((shoes) => (
-          <ShoesCard
-            shoes={shoes}
-            key={shoes._id}
-            deleteShoes={deleteShoes}
-            openDrawer={openDrawer}
-          />
+      {!!allShoes.length && isFilters && (
+        <Box sx={styles.filtersContainer}>
+          <Filters activeTab={activeTab} queryParams={queryParams} />
+        </Box>
+      )}
+      {!!allShoes.length &&
+        (isFilters ? (
+          <Stack
+            width="100%"
+            spacing={styles.cardContainer.spacing}
+            display="flex"
+            direction={styles.cardContainer.direction as DirectionType}
+            mt="1rem"
+            useFlexGap
+            flexWrap="wrap"
+          >
+            {filtersData(sortShoes(activeTab, allShoes), search).map(
+              (shoes) => (
+                <ShoesCard
+                  shoes={shoes}
+                  key={shoes._id}
+                  deleteShoes={deleteShoes}
+                  openDrawer={openDrawer}
+                />
+              )
+            )}
+          </Stack>
+        ) : (
+          <NothingFoundComponent />
         ))}
-      </Stack>
-
-      {/* <Stack
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        mt="5rem"
-      >
-        <Box
-          component="img"
-          src={CreateImage}
-          alt="create_img"
-          sx={styles.createImage}
-        />
-        <Stack mt="3rem">
-          <Typography variant="body2">
-            Seem’s like you still didn’t add <br /> any new sneaker to your
-            collection
-          </Typography>
+      {!allShoes.length && (
+        <Stack
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          mt="5rem"
+        >
+          <Box
+            component="img"
+            src={CreateImage}
+            alt="create_img"
+            sx={styles.createImage}
+          />
+          <Stack mt="3rem">
+            <Typography variant="body2">
+              Seem’s like you still didn’t add <br /> any new sneaker to your
+              collection
+            </Typography>
+          </Stack>
         </Stack>
-      </Stack> */}
+      )}
       <Box sx={styles.mobileButtonContainer}>
         <Button
           startIcon={<PlusIcon />}
           size="medium"
           variant="contained"
-          onClick={openDrawer}
+          onClick={() => openDrawer({})}
           sx={styles.mobileButton}
         >
           Add new sneakers
