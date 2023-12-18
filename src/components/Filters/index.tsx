@@ -1,11 +1,10 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import { filtersData } from "../../constants";
 import { styles } from "./styles";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { FilterState, FiltersData, QueryParams, Shoes } from "../../types";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { FilterState, FiltersData, QueryParams } from "../../types";
+import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ReactComponent as SelectIcon } from "../../assets/icons/chevron_down.svg";
 import { useNavigate, createSearchParams } from "react-router-dom";
@@ -19,7 +18,7 @@ interface FiltersProps {
 const Filters = ({
   activeTab = "year",
   queryParams,
-  isFilters
+  isFilters,
 }: FiltersProps): JSX.Element => {
   const navigate = useNavigate();
 
@@ -32,10 +31,6 @@ const Filters = ({
       }).toString(),
     });
   };
-
-  // const handleSelectChange = (event: SelectChangeEvent) => {
-  //   setActiveTab(event.target.value as FilterState);
-  // };
 
   return (
     <>
@@ -69,11 +64,7 @@ const Filters = ({
         }}
       >
         <Box component="section" sx={styles.mobileContainer}>
-          <Select
-            value={activeTab}
-            size="small"
-            IconComponent={SelectIcon}
-          >
+          <Select value={activeTab} size="small" IconComponent={SelectIcon}>
             {filtersData.map((filter: FiltersData) => (
               <MenuItem
                 key={filter.title}

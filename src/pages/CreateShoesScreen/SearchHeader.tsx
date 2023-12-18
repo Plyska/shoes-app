@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useMemo, useEffect } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -15,7 +15,6 @@ import {
   useNavigate,
   createSearchParams,
 } from "react-router-dom";
-import { sortShoes, filtersData } from "../../constants/helpers";
 
 interface SearchHeaderProps {
   openDrawer: (shoes: Shoes | {}) => void;

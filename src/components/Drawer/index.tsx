@@ -12,7 +12,6 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { drawerFormValidator } from "../../validations/DrawerFormValidator";
 import { DrawerForm, Shoes } from "../../types";
-import { useMemo } from "react";
 
 interface MuiDrawerProps {
   isDrawer: boolean;
@@ -29,7 +28,6 @@ const MuiDrawer = ({
   selectedShoes,
   handleSubmitEndpoint
 }: MuiDrawerProps): JSX.Element => {
-  console.log(selectedShoes)
   const {
     register,
     handleSubmit,
@@ -42,7 +40,6 @@ const MuiDrawer = ({
   });
 
   const onSubmit: SubmitHandler<DrawerForm> = async (shoes) => {
-    console.log(shoes);
     reset();
     closeDrawer();
     handleSubmitEndpoint(shoes, selectedShoes._id);

@@ -110,12 +110,4 @@ theme.typography.subtitle2 = {
   lineHeight: "1.5rem",
 };
 
-// theme.typography. = {
-//   fontFamily: "Excon-Regular",
-//   fontWeight: 400,
-//   fontSize: "1rem",
-//   lineHeight: "1.5rem",
-//   textAlign: "center",
-// };
-
 export default theme;
