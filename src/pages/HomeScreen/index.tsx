@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 const HomeScreen = (): JSX.Element => {
   const navigate = useNavigate();
-  
+
   const handleClick: () => void = () => {
-    navigate("create")
+    navigate("create");
   };
 
   return (

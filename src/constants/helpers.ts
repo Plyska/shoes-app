@@ -1,9 +1,12 @@
 import { FilterState, Shoes } from "../types";
 import { filters } from ".";
+import {
+  createSearchParams, useSearchParams,
+} from "react-router-dom";
 
 export const sortShoes = (
   activeTab: FilterState,
-  allShoes: Array<Shoes>
+  allShoes: Array<Shoes> = []
 ): Shoes[] => {
   return allShoes.toSorted((a, b) => a[activeTab] - b[activeTab]);
 };

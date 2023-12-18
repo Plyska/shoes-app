@@ -12,9 +12,9 @@ export interface Shoes {
 
 export type ValueOf<T> = T[keyof T];
 
-export type DrawerForm = Omit<Shoes, "_id">
+export type DrawerForm = Omit<Shoes, "_id">;
 
-export type FilterState = ValueOf<typeof filters>
+export type FilterState = ValueOf<typeof filters>;
 
 export interface FiltersData {
   title: string;
@@ -26,4 +26,10 @@ export interface FiltersData {
 export interface QueryParams {
   sortBy?: FilterState;
   search?: string;
+}
+
+export interface Alert {
+  show: boolean;
+  status: "success" | "error";
+  message?: string;
 }

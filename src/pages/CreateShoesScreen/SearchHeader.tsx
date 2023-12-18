@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useMemo, useEffect } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -21,6 +21,7 @@ interface SearchHeaderProps {
   activeTab: FilterState;
   search?: string | null;
   queryParams: QueryParams;
+  isFilters: boolean;
 }
 
 const SearchHeader = ({
@@ -28,6 +29,7 @@ const SearchHeader = ({
   activeTab,
   search,
   queryParams,
+  isFilters,
 }: SearchHeaderProps): JSX.Element => {
   const [searchText, setSearchText] = useState<string>(search || "");
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,11 +65,15 @@ const SearchHeader = ({
 
   return (
     <Box component="section" sx={styles.header}>
-      <Box>
+      <Box sx={styles.titleContainer}>
         <Typography variant="h1">Your collection</Typography>
       </Box>
       <Box sx={styles.filtersMobileContainer}>
-        <Filters activeTab={activeTab} queryParams={queryParams} />
+        <Filters
+          activeTab={activeTab}
+          queryParams={queryParams}
+          isFilters={isFilters}
+        />
       </Box>
       <Stack display="flex" direction="row" justifyContent="flex-end">
         <Box
