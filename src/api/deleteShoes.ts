@@ -1,6 +1,5 @@
-import axios from "axios";
+import { instance } from "../config/axios";
 
 export const deleteShoes = async (shoesId: string): Promise<any> => {
-  const URL = `https://shoes-app-back.vercel.app/all-shoes/${shoesId}`;
-  await axios.delete(URL);
+  await instance.delete(`${shoesId}`);
 };
