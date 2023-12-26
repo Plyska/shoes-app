@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { KEY } from '../constants';
 
-const URL = `https://crudcrud.com/api/${KEY}/shoes`;
+const URL = `https://shoes-app-back.vercel.app/all-shoes`;
 
 export const getAllShoes = async (): Promise<any> => {
   const result = await axios.get(URL);

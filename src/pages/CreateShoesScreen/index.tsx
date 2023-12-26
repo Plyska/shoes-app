@@ -17,6 +17,7 @@ import Filters from "../../components/Filters";
 import { FilterState, QueryParams } from "../../types";
 import { ResponsiveStyleValue } from "@mui/system";
 import { deleteShoes as deleteShoesEndpoint } from "../../api/deleteShoes";
+import { editShoes as editShoesEndpoint } from "../../api/editShoes";
 import { useSearchParams } from "react-router-dom";
 import { sortShoes, filtersData } from "../../constants/helpers";
 import Typography from "@mui/material/Typography";
@@ -51,7 +52,7 @@ const CreateShoesScreen = (): JSX.Element => {
   const addWithLoading = useWithLoading(addNewShoes);
   const getAllShoes = useWithLoading(getAllShoesEndpoint);
   const deleteWithLoading = useWithLoading(deleteShoesEndpoint);
-  // const editWithLoading = useWithLoading(editShoesEndpoint);
+  const editWithLoading = useWithLoading(editShoesEndpoint);
 
   const addShoes = async (shoes: DrawerForm) => {
     await addWithLoading(shoes);
@@ -71,15 +72,8 @@ const CreateShoesScreen = (): JSX.Element => {
   };
 
   const editShoes = async (shoes: DrawerForm, shoesId: string) => {
-    // await editWithLoading(shoes, shoesId); // not working the put methood, error CORS
-    
-    setAllShouse((prev) => {
-      const newShoes = [...prev];
-      const index = newShoes.findIndex((item) => item._id === shoesId);
-      newShoes[index] = { ...shoes, _id: shoesId };
-      return newShoes;
-    });
-
+     await editWithLoading(shoes, shoesId);
+    shouldReload();
     closeDrawer();
   };
 
